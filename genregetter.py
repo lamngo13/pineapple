@@ -2,10 +2,12 @@
 #electrician plumbing 
 import requests
 import json
-import os, time
+
+import requests
+import json
 
 # Set up the API URL and parameters
-url = "https://api.spotify.com/v1/audio-features/"
+url = "https://api.spotify.com/v1/tracks/"
 #track_id = "7ouMYWpwJ422jRcDASZB7P,4VqPOruhp5EdPBeR92t6lQ,2takcwOaAZWiXQijPHIx7B"
 track_id = "7ouMYWpwJ422jRcDASZB7P"
 
@@ -25,11 +27,6 @@ response = requests.get(full_url, headers=headers)
 if response.status_code == 200:
     # Load the JSON data
     data = json.loads(response.text)
-    file = open("betterstorage.txt", "a")
-
-    #this wipes file if u want
-    #file.truncate(0)
-    file.write(str(data)+'\n')
 
     # Parse and print the results
     print(json.dumps(data, indent=4))

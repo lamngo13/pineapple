@@ -14,7 +14,9 @@ track_id = "7ouMYWpwJ422jRcDASZB7P"
 full_url = url + track_id
 
 # Set up the Bearer token
-token = "TOKENVAL"
+token = "BQAQuqWHp9F4VVohxuQaF-Xthilkq3gJiYS-kWoFItpCvkPTkkYfKqP6kDmsfKsI0KHUWfKCV3wtBckTSa95XGPwCXGJwkZ-urhVE89YoFipOIlGopUmKzT397Ix_YI78krCjTPbVKL7cfU0CmNyDu-hJ0zipFlhhQ13lu7POtZ0PvRmCaNSwBprj3G83iiCdTRZPGL_U9gDVAiO4ZHvp9vqM2gmFWYj3c_vD2Pn7WRm2eyaa3p-_1oae9hlJLS-ZzNdsG5V5iH6l-V2S9iNwxmSwG4Iu5Uzgb6EYiP7svbJG8MnphADrCGuteSOvOCz0vbJa_zY63zopUbPJb2IMvgDBWBfJg"
+
+#BQAQuqWHp9F4VVohxuQaF-Xthilkq3gJiYS-kWoFItpCvkPTkkYfKqP6kDmsfKsI0KHUWfKCV3wtBckTSa95XGPwCXGJwkZ-urhVE89YoFipOIlGopUmKzT397Ix_YI78krCjTPbVKL7cfU0CmNyDu-hJ0zipFlhhQ13lu7POtZ0PvRmCaNSwBprj3G83iiCdTRZPGL_U9gDVAiO4ZHvp9vqM2gmFWYj3c_vD2Pn7WRm2eyaa3p-_1oae9hlJLS-ZzNdsG5V5iH6l-V2S9iNwxmSwG4Iu5Uzgb6EYiP7svbJG8MnphADrCGuteSOvOCz0vbJa_zY63zopUbPJb2IMvgDBWBfJg
 headers = {"Authorization": f"Bearer {token}"}
 
 # Make the GET request

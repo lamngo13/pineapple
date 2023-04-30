@@ -63,6 +63,11 @@ else:
 
 #genreify the data
 data=data.replace('\'danceability\'', '\'genre\': \"Rap\", \'danceability\'')
+data=data.replace("\'", "\"")
 
 file = open("shoob.json", "a")
+file.write(data)
+file.close()
+
+file = open("shoob1.json", "a")
 file.write(data)

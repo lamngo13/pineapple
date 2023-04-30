@@ -62,7 +62,7 @@ else:
     print(f"Request failed with status code {response.status_code}: {response.text}")
 
 #genreify the data
-data=data.replace('\'danceability\'', '\'genre\': Rap, \'danceability\'')
+data=data.replace('\'danceability\'', '\'genre\': \"Rap\", \'danceability\'')
 
 file = open("shoob.json", "a")
 file.write(data)

@@ -13,7 +13,7 @@ url = "https://api.spotify.com/v1/search?q=genre%Rap&type=track&limit=50"
 full_url = url
 
 # Set up the Bearer token
-token = "BQD81fh5GHr4NQqwQCVIQtHAtfDAKCaFknuivHIuzI77hB7W_7o2TO1aEXEHWGhS8EhiNWY7_w9lsqOPc9yDa5lP9-gE2NAwAfvPKfzLPGfV-gmaX9G_yKo_FqrZxy14tFyaOFt9armJMcJ3RClH-B10DgKC-MiarIId7T8GrVn5FCocCPXJE44Y5pMKeFR9_VxKG24mEhqtWf0GgNns6x6pk_Dl1V2B4a-Q804RncRA3ngxVMeMX-mtQTh-mcrQ847gBneQcLjlH2UwqjqWi_q3cRKOQnQ93fbnCzWuZtSQFB5Kq4z1y1y4cwms6DfvIXC6dPVV9_eT-rtVs6lYFsjwNo1f4g"
+token= "BQAvx2G47XmSlfk4nhMSKcNKXzHxMFIbmFEkpry6TKipjIf_cqnqlci80tjaKieNfYlw6TXoZfRknPkhIVOfVcT0MTOUxNXQdo3GA6zuJ6DXPql1abeAQEHEyK0XeL4S1YFuJCPa55aL1AAQEAdBSoUTTsJ55L7fr5XZ3RW7c2xy8kVdE0Koc2f91aBkCmpbAeBHvnc9k60pha_m2JOSDgjAPlYAbA0np7KDPzgd9tOI1zZd_HMd2AyasscKC4lZcxD7vOXOQIrhY2oFzxxn8ymoSCnHK1a4navy40CXFtEACYJIVY64BA27qCCFmckrBAnk_u7lF3PQQGLSlTezKDrkzO4APw"
 #Bearer BQAUXQBvjeuUyDSSPOyi2uo2u7HEys31TfF6Aj7z9lzKNJ8EGpVLzXf32DxkhRdJ-XcA0cqFepSw9LaoDuYvsK2Mp27Xkx93m44CQ9fQDksFAdMWJhiIZqNaru4kJ815ua1saFf5MaGUmx1d7YHxIij3E-wGM8anVRk3yX5BfJK6RQWlZ8WnFkFP7_CYaVatm1g395St8sKlR8cxh3t8eBHEOu-CminVpfnyYSsH7FAGGLAs8CRur953fGPfFkLJRRKD2yhK0cACmmOwqCkAmwIoTzRXUOcmx4Ceglepykrcq3flLyF8gUnjm509SW3990qa4LMmS40i7YGGUxbeas-E_NPOFA
 headers = {"Authorization": f"Bearer {token}"}
 
@@ -64,5 +64,5 @@ else:
 #genreify the data
 data=data.replace('\'danceability\'', '\'genre\': Rap, \'danceability\'')
 
-file = open("ayyo.csv", "a")
+file = open("shoob.json", "a")
 file.write(data)

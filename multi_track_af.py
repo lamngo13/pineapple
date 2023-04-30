@@ -7,7 +7,7 @@ import os, time
 # Set up the API URL and parameters
 url = "https://api.spotify.com/v1/audio-features/"
 #track_id = "7ouMYWpwJ422jRcDASZB7P,4VqPOruhp5EdPBeR92t6lQ,2takcwOaAZWiXQijPHIx7B"
-track_id = "7ouMYWpwJ422jRcDASZB7P"
+track_id = "2takcwOaAZWiXQijPHIx7B"
 
 # Add the track_id to the URL
 full_url = url + track_id

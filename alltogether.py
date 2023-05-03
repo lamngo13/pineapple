@@ -13,7 +13,7 @@ url = "https://api.spotify.com/v1/search?q=genre%Rap&type=track&limit=50"
 full_url = url
 
 # Set up the Bearer token
-token= "BQAvx2G47XmSlfk4nhMSKcNKXzHxMFIbmFEkpry6TKipjIf_cqnqlci80tjaKieNfYlw6TXoZfRknPkhIVOfVcT0MTOUxNXQdo3GA6zuJ6DXPql1abeAQEHEyK0XeL4S1YFuJCPa55aL1AAQEAdBSoUTTsJ55L7fr5XZ3RW7c2xy8kVdE0Koc2f91aBkCmpbAeBHvnc9k60pha_m2JOSDgjAPlYAbA0np7KDPzgd9tOI1zZd_HMd2AyasscKC4lZcxD7vOXOQIrhY2oFzxxn8ymoSCnHK1a4navy40CXFtEACYJIVY64BA27qCCFmckrBAnk_u7lF3PQQGLSlTezKDrkzO4APw"
+token= "BQDjc8WYc35i6MIbhSx5YaB6XKsiKVtVI_taFFPWmFN7eAT0kPpJx5kEuD_8hYgBKiwxInxLAoywvrVikZ_2pREQj91AvjBwL6yEw8snOKwrtpSHNH-Utd4F63JY-jIK79sp4acD-fE1TVMtQX4laG4XUxdlWTa2Bq9_v4oLWuiPxz84NUHO5jt8-7n6_QpcvxTmFDL5c6iywHjgJ1cftqIhWawcuGMlDmzoc9MS411Qbn1f6GaAFTnB-cAxndHeYnihjFjoUyVQ00ZJg45vCVJxoW2tf5EndTmovMMj054F4ZwZ-LjR6FGu_roX_HVwcJV2B4vkp5SRqyIfggddJpzbRB_0EQ"
 headers = {"Authorization": f"Bearer {token}"}
 
 # Make the GET request
@@ -68,5 +68,5 @@ file = open("shoob.json", "a")
 file.write(data)
 file.close()
 
-file = open("shoob1.json", "a")
-file.write(data)
+#file = open("shoob1.json", "a")
+#file.write(data)

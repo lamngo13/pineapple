@@ -3,17 +3,39 @@
 import requests
 import json
 import os, time
+import base64
 
 # Set up the API URL and parameters
 url = "https://api.spotify.com/v1/search?q=genre%Rap&type=track&limit=50"
 #TODO change Rap to other genres 
 
 
+
+#token stuff 
+
+client_id = "38102a72830649e8bffa570c0e40a0b8"
+client_secret = "28ba3a3963bc48309ca17c177a742e84"
+
+
+imidiot = client_id + ":" + client_secret
+auth_url = 'https://accounts.spotify.com/api/token'
+auth_headers = {'Authorization': 'Basic ' + base64.b64encode(imidiot.encode('ascii')).decode('ascii') }
+auth_form = {"grant_type": 'client_credentials'}
+
+auth_response = requests.post(auth_url, headers=auth_headers, data=auth_form)
+
+if auth_response.status_code == 200:
+    auth_response =json.loads(auth_response.text)
+    token = auth_response['access_token']
+else:
+    print(f"Request failed with status code {auth_response.status_code}: {auth_response.text}")
+
+
+
 # Add the track_id to the URL
 full_url = url
 
 # Set up the Bearer token
-token= "BQDjc8WYc35i6MIbhSx5YaB6XKsiKVtVI_taFFPWmFN7eAT0kPpJx5kEuD_8hYgBKiwxInxLAoywvrVikZ_2pREQj91AvjBwL6yEw8snOKwrtpSHNH-Utd4F63JY-jIK79sp4acD-fE1TVMtQX4laG4XUxdlWTa2Bq9_v4oLWuiPxz84NUHO5jt8-7n6_QpcvxTmFDL5c6iywHjgJ1cftqIhWawcuGMlDmzoc9MS411Qbn1f6GaAFTnB-cAxndHeYnihjFjoUyVQ00ZJg45vCVJxoW2tf5EndTmovMMj054F4ZwZ-LjR6FGu_roX_HVwcJV2B4vkp5SRqyIfggddJpzbRB_0EQ"
 headers = {"Authorization": f"Bearer {token}"}
 
 # Make the GET request
@@ -64,9 +86,32 @@ else:
 data=data.replace('\'danceability\'', '\'genre\': \"Rap\", \'danceability\'')
 data=data.replace("\'", "\"")
 
-file = open("shoob.json", "a")
-file.write(data)
+data=json.loads(data)
+print(len(data['audio_features']))
+
+print(data['audio_features'][:-3])
+#print(data['audio_features'][-3:])
+
+bigfile = data['audio_features'][:-3]
+smallfile = data['audio_features'][-3:]
+
+file = open("bigfile.json", "a")
+json.dump({'bruh': bigfile}, file, ensure_ascii=False, indent=4)
 file.close()
 
+file = open("smallfile.json", "a")
+json.dump({'bruh': smallfile}, file, ensure_ascii=False, indent=4)
+file.close()
+
+'''
+file = open("bigfile.json", "a")
+file.write(bigfile)
+file.close()
+
+file = open("smallfile.json", "a")
+file.write(smallfile)
+file.close()
+'''
 #file = open("shoob1.json", "a")
 #file.write(data)
+

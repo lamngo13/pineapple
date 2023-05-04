@@ -41,27 +41,6 @@
             "analysis_url": "https://api.spotify.com/v1/audio-analysis/3xNTYCJki80XXOphZi7UKu",
             "duration_ms": 117295,
             "time_signature": 4
-        },
-        {
-            "genre": "Rap",
-            "danceability": 0.759,
-            "energy": 0.417,
-            "key": 1,
-            "loudness": -14.489,
-            "mode": 1,
-            "speechiness": 0.502,
-            "acousticness": 0.0147,
-            "instrumentalness": 1.01e-05,
-            "liveness": 0.171,
-            "valence": 0.401,
-            "tempo": 86.016,
-            "type": "audio_features",
-            "id": "755l4UkvolIqUBjlsv6uID",
-            "uri": "spotify:track:755l4UkvolIqUBjlsv6uID",
-            "track_href": "https://api.spotify.com/v1/tracks/755l4UkvolIqUBjlsv6uID",
-            "analysis_url": "https://api.spotify.com/v1/audio-analysis/755l4UkvolIqUBjlsv6uID",
-            "duration_ms": 120000,
-            "time_signature": 4
         }
     ]
 }

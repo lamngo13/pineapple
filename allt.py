@@ -111,7 +111,17 @@ smallRock = json.loads(smallRock)
 bigPop = json.loads(bigPop)
 smallPop = json.loads(smallPop)
 
+lastBig = {'bruh': (bigRap+bigRock+bigPop)}
+lastSmall = {'bruh': (smallRap+smallRock+smallPop)}
 
+with open('bigfile.json', 'w') as f:
+    json.dump(lastBig, f, ensure_ascii=False, indent=4)
+    f.close()
+
+with open('smallfile.json', 'w') as f:
+    json.dump(lastSmall, f, ensure_ascii=False, indent=4)
+    f.close()
+'''
 file = open("bigfile.json", "w")
 json.dump({'bruh': bigRap}, file, ensure_ascii=False, indent=4)
 file.close()
@@ -119,16 +129,5 @@ file.close()
 file = open("smallfile.json", "w")
 json.dump({'bruh': smallRap}, file, ensure_ascii=False, indent=4)
 file.close()
-
 '''
-file = open("bigfile.json", "a")
-file.write(bigfile)
-file.close()
-
-file = open("smallfile.json", "a")
-file.write(smallfile)
-file.close()
-'''
-#file = open("shoob1.json", "a")
-#file.write(data)
 

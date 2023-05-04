@@ -5,17 +5,19 @@ import json
 import os, time
 import base64
 
+
 # Set up the API URL and parameters
 url = "https://api.spotify.com/v1/search?q=genre%Rap&type=track&limit=50"
 #TODO change Rap to other genres 
+file = open(".secret", "r", encoding="utf-8")
+#print(file.read())
+#print("AYOASDFDAS")
+shword = file.readlines()
 
-
-
-#token stuff 
-
-client_id = "38102a72830649e8bffa570c0e40a0b8"
-client_secret = "28ba3a3963bc48309ca17c177a742e84"
-
+client_id = shword[0].strip("\n")
+client_secret = shword[1]
+#id first then secret
+print(client_id)
 
 imidiot = client_id + ":" + client_secret
 auth_url = 'https://accounts.spotify.com/api/token'
@@ -87,19 +89,19 @@ data=data.replace('\'danceability\'', '\'genre\': \"Rap\", \'danceability\'')
 data=data.replace("\'", "\"")
 
 data=json.loads(data)
-print(len(data['audio_features']))
+#print(len(data['audio_features']))
 
-print(data['audio_features'][:-3])
-#print(data['audio_features'][-3:])
+#print(data['audio_features'][:-3])
+
 
 bigfile = data['audio_features'][:-3]
 smallfile = data['audio_features'][-3:]
 
-file = open("bigfile.json", "a")
+file = open("bigfile.json", "w")
 json.dump({'bruh': bigfile}, file, ensure_ascii=False, indent=4)
 file.close()
 
-file = open("smallfile.json", "a")
+file = open("smallfile.json", "w")
 json.dump({'bruh': smallfile}, file, ensure_ascii=False, indent=4)
 file.close()
 

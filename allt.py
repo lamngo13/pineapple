@@ -16,8 +16,15 @@ fullGenreList = [rapDict, rockDict, popDict]
 #opens the file with the secrets and reads them 
 file = open(".secret", "r", encoding="utf-8")
 shword = file.readlines()
-client_id = shword[0].strip("\n")
-client_secret = shword[1]
+#client_id = shword[0].strip("\n")
+#client_secret = shword[1]
+
+#The secret is supposed to be hidden but idc, this should work on anyone's machine, NO AUTH TOKEN REQUIRED YAY LFGO
+
+
+client_id = "38102a72830649e8bffa570c0e40a0b8"
+client_secret = "28ba3a3963bc48309ca17c177a742e84"
+file.close()
 #id first then secret
 
 
@@ -175,26 +182,15 @@ for i in range(0,5,1): #loop through each main segment
 
 
 #KEEP FOR DEBUGGING
-print("\nH&&&&&&&&&&&&&&&&&&&&&&&&&&&\n")
-print(type(data))
-print("\n")
 #print(data)
 #print("\n")
 #print(data['audio_features'])
 print("total songs: " + str(totalSongs))
 print(fullGenreList)
+
+
 dataList = data['audio_features']
-#print("LEN of data list: " + str(len(dataList)))
-#print("\n LEN OF OG: " + str(len(data['audio_features'])))
-#print("AQUIIII: ")
-#print(type(dataList))
-#print(dataList)
-#print("\n")
-#print(dataList)
-#for i in range(0, len(dataList),1):
-#    print("\nINDEX: " + str(i))
-#    print(dataList[i])
-#print("\n OBER")
+#^this creates a list of the data to segment it by genre - v important!
 
 #******************************************CLEAN UP DATA BY PUTTING EACH INTO A STRING SEGMENTED BY GENRE*********************************************************************
 
@@ -204,88 +200,45 @@ dataList = data['audio_features']
 #**The idea here is to segment 90% of the data into the training data, and like 10% into test data
 #training data is one file, test data is the other file
 #we need to make it a string to clean it up
-#spotify api is spotty at best, so we don't actually know how many songs we're going to get
+#spotify api is [INCONSISTENT] at best, so we don't actually know how many songs we're going to get
 #that's why we need to do it this way ugh
 
-#print("data should be a list rn")
-#print(type(data['audio_features']))
-#print(data['audio_features'])
 
-dataList = data['audio_features']
-print("LENGTH OF DATALIST: " + str(len(dataList)))
-
-
-#bigRap = data['audio_features'][:fullGenreList[0]['num']-3]
-#smallRap = data['audio_features'][fullGenreList[0]['num']-3:fullGenreList[0]['num']]
-
-#CHECK MY WORK
-#we have to stair step this by only making rock songs in bigRock by basing off where we were
-#bigRock = data['audio_features'][fullGenreList[0]['num']:fullGenreList[1]['num']-3]
-#smallRock = data['audio_features'][fullGenreList[1]['num']-3:fullGenreList[1]['num']]
-
-#bigPop = data['audio_features'][fullGenreList[1]['num']:fullGenreList[2]['num']-3]
-#smallPop = data['audio_features'][fullGenreList[2]['num']-3:fullGenreList[2]['num']]
-
-#redo
 bigRap = dataList[:fullGenreList[0]['num']-3]
 iterator = fullGenreList[0]['num']-3
-print("ITERATOR: " + str(iterator))
-print("\nBIGRAP: ")
-print(type(bigRap))
-print(str(len(bigRap)))
-print(bigRap)
-#COFFEE BIG RAP OKAY
+#the idea is to get the first 0 to [number of rap songs - 3] as the first var
+#and the last 3 rap songs as the 2nd var
+#each var (rn is just a string) will be cleaned up later
+#and then appended to the appropriate file
 
 smallRap = dataList[iterator:iterator + 3]
 iterator = fullGenreList[0]['num']
-print("ITERATOR: " + str(iterator))
-####smallRap = data['audio_features'][fullGenreList[0]['num']-3:fullGenreList[0]['num']]
-print("\nsmallRAP: ")
-print(type(smallRap))
-print(str(len(smallRap)))
-print(smallRap)
+#the iterator is necessary ish to keep our place in the list
+#^the point is we traverse the list to find songs of the right genre
+#and then assign those songs the genre by search num
+#ik this is a weird way to do it, but spotify api 
+#doesn't give us the genre so we kinda have to retroactively do it ourselves 
 
-#CHECK MY WORK
+
 #we have to stair step this by only making rock songs in bigRock by basing off where we were
-#bigRock = data['audio_features'][fullGenreList[0]['num']:fullGenreList[1]['num']-3]
-#smallRock = data['audio_features'][fullGenreList[1]['num']-3:fullGenreList[1]['num']]
-
 bigRock = dataList[iterator:iterator+fullGenreList[1]['num']-3]
 iterator += fullGenreList[1]['num']-3
-print("ITERATOR: " + str(iterator))
-print("\nsmallROCK: ")
-print(type(bigRock))
-print(str(len(bigRock)))
-print(str(len(bigRock)))
-print(bigRock)
 
 smallRock = dataList[iterator:iterator+3]
 iterator += 3
-print("ITERATOR: " + str(iterator))
-print("\nsmallROCK: ")
-print(type(smallRock))
-print(str(len(smallRock)))
-print(str(len(smallRock)))
-print(smallRock)
-#print(str(fullGenreList[1]['num']))
-#print(str(fullGenreList[2]['num']))
-bigPop = ""
-#bigPop = data['audio_features'][fullGenreList[1]['num']:fullGenreList[2]['num']-3]
+
 bigPop = dataList[iterator:iterator+fullGenreList[2]['num']-3]
 iterator += fullGenreList[2]['num']-3
-print("ITERATOR: " + str(iterator))
-print("BIG POP: ")
-print(str(len(bigPop)))
-print(bigPop)
-smallPop = ""
-smallPop = dataList[iterator:iterator+3]
-print("ITERATOR: " + str(iterator))
-#smallPop = data['audio_features'][fullGenreList[2]['num']-3:fullGenreList[2]['num']]
-print("SMALL POP: ")
-print(str(len(smallPop)))
-print(smallPop)
-#22, 40, 40
 
+smallPop = dataList[iterator:iterator+3]
+#keep below line for future work
+iterator += 3
+
+#TODO COFFEE add more genres here, 
+
+
+#OK NOW we have the rap, rock, pop, etc songs sorted into a straight string, 
+#(I mean its a string rn but we can convert back to a dict)
 
 #now replace with correct genres
 bigRap = str(bigRap).replace('\'danceability\'', '\'genre\': \"Rap\", \'danceability\'').replace("\'", "\"")
@@ -297,7 +250,8 @@ smallRock = str(smallRock).replace('\'danceability\'', '\'genre\': \"Rock\", \'d
 bigPop = str(bigPop).replace('\'danceability\'', '\'genre\': \"Pop\", \'danceability\'').replace("\'", "\"")
 smallPop = str(smallPop).replace('\'danceability\'', '\'genre\': \"Pop\", \'danceability\'').replace("\'", "\"")
 
-#remake into JSON to put into file as a value 
+
+#remake into JSON to put into file as a value that can be easily read by ML libraries 
 bigRap = json.loads(bigRap)
 smallRap = json.loads(smallRap)
 
@@ -307,35 +261,12 @@ smallRock = json.loads(smallRock)
 bigPop = json.loads(bigPop)
 smallPop = json.loads(smallPop)
 
-'''
-print("lists of the stuffs"+"\n")
-print("BIG RAP: \n")
-print(len(bigRap))
-print(bigRap)
-print("\n")
-print("SMALL RAP: \n")
-print(len(smallRap))
-print(smallRap)
-print("\n")
-print("BIG ROCK : ")
-print(len(bigRock))
-print(bigRock)
-'''
-#print("\n")
-#print("HERHEHERHERHERHERHEHEHREHR")
-#print("SMALL ROCK:    ")
-#print(len(smallRock))
-#print(smallRock)
-#print("\n")
-#print("BIG POP \n")
-#print(len(bigPop))
-#print(bigPop)
-#print("\n")
-#print("SMALL POP \n")
-#print(len(smallPop))
-#print(smallPop)
 
-
+#OK SO THIS IS IMPORTANT********************************************
+#lastBig is now a dict, of a single key-val pair.  The key is 'bruh',
+#and the value is a LIST of DICTS - everything we need
+#this is werid asf to me, but apparently this is how a ton of stuff is done
+#so this is the right way.
 lastBig = {'bruh': (bigRap+bigRock+bigPop)}
 lastSmall = {'bruh': (smallRap+smallRock+smallPop)}
 
@@ -347,21 +278,3 @@ with open('bigfile.json', 'w') as f: #btw the 'w' parameter here clears whatev i
 with open('smallfile.json', 'w') as f:
     json.dump(lastSmall, f, ensure_ascii=False, indent=4)
     f.close()
-'''
-file = open("bigfile.json", "w")
-json.dump({'bruh': bigRap}, file, ensure_ascii=False, indent=4)
-file.close()
-
-file = open("smallfile.json", "w")
-json.dump({'bruh': smallRap}, file, ensure_ascii=False, indent=4)
-file.close()
-'''
-
-#TODO PROBLEMS:
-#the data should be 101 songs long, not 60
-#in any case, when i try to copy data['audio_features], I get a list of 20 elements and they look ok 
-#^individually, but there should be 101, but at least 60
-
-#i think its bc spotify api only accepts 20?????? NOPE it accepts up to 100
-
-#I think the problem is the way I'm appending to the dict 

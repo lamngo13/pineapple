@@ -108,11 +108,13 @@ iterationDict = {'reg': math.floor(totalSongs/5), 'xtra':(totalSongs%5) }
 #print("TESTING ELEMENT")
 #print(olddata[5])
 #print("total songs: " + str(totalSongs))
-#print(iterationDict)
+#print(olddata)#print(iterationDict)
 #print("\n")
-
+#COFFEE
+#AT THIS POINT, THERE ARE THE CORRECT NUMBER OF SONGS IN THIS LIST, COMMA SEPARATED
 
 #**********************GET ATTRIBUTES OF A SONG BY LOOKING UP THE SPECIFIC SONG ID*******************************************************************************************************
+
 for i in range(0,5,1): #loop through each main segment 
     full_url = featureUrl #start the url string w the universal lookup api url
 
@@ -127,6 +129,9 @@ for i in range(0,5,1): #loop through each main segment
 
     #send get request w full segmented URL
     response = requests.get(full_url, headers=headers)
+    #print("FULL URL: " + full_url + "\n")
+    #COFFEE
+    #The URLs are correct; they are unique and there are the right number of them.
 
     if response.status_code == 200:
         #first case establishes the structure - must keep
@@ -134,10 +139,12 @@ for i in range(0,5,1): #loop through each main segment
             #print("FIRSTFIRST")
             firstjson = json.loads(response.text) #take in the json response
             data = firstjson #set data to this, we need to do it this way 
+
             #to get the append structure!
         else:
             tmpdata = json.loads(response.text) # Load the JSON data
-            data['audio_features'].append(tmpdata) #append to our building json object
+            data['audio_features'] = data['audio_features']+tmpdata['audio_features'] #append to our building json object
+
         
     #LAST ONE TO GET REMAINDER this one is really really strange but whatev will TODO later
     if(iterationDict['xtra'] > 0):
@@ -158,7 +165,7 @@ for i in range(0,5,1): #loop through each main segment
             response = requests.get(full_url, headers=headers)
             holder = ""
             if response.status_code == 200:
-                data['audio_features'].append(tmpdata)
+                data['audio_feature'] = data['audio_features']+tmpdata['audio_features']
             else:
                 print(f"Request failed with status code {response.status_code}: {response.text}")
 
@@ -170,19 +177,24 @@ for i in range(0,5,1): #loop through each main segment
 #KEEP FOR DEBUGGING
 print("\nH&&&&&&&&&&&&&&&&&&&&&&&&&&&\n")
 print(type(data))
+print("\n")
 #print(data)
+#print("\n")
+#print(data['audio_features'])
 print("total songs: " + str(totalSongs))
 print(fullGenreList)
 dataList = data['audio_features']
-print("LEN of data list: " + str(len(dataList)))
-print("AQUIIII: ")
-print(dataList[0])
-print("\n")
+#print("LEN of data list: " + str(len(dataList)))
+#print("\n LEN OF OG: " + str(len(data['audio_features'])))
+#print("AQUIIII: ")
+#print(type(dataList))
 #print(dataList)
-for i in range(0, len(dataList),1):
-    print("\nINDEX: " + str(i))
-    print(dataList[i])
-print("\n OBER")
+#print("\n")
+#print(dataList)
+#for i in range(0, len(dataList),1):
+#    print("\nINDEX: " + str(i))
+#    print(dataList[i])
+#print("\n OBER")
 
 #******************************************CLEAN UP DATA BY PUTTING EACH INTO A STRING SEGMENTED BY GENRE*********************************************************************
 
@@ -218,19 +230,20 @@ print("LENGTH OF DATALIST: " + str(len(dataList)))
 bigRap = dataList[:fullGenreList[0]['num']-3]
 iterator = fullGenreList[0]['num']-3
 print("ITERATOR: " + str(iterator))
-#print("\nBIGRAP: ")
-#print(type(bigRap))
-#print(str(len(bigRap)))
-#print(bigRap)
+print("\nBIGRAP: ")
+print(type(bigRap))
+print(str(len(bigRap)))
+print(bigRap)
+#COFFEE BIG RAP OKAY
 
-smallRap = dataList[iterator:iterator + fullGenreList[0]['num']]
-iterator += fullGenreList[0]['num']
+smallRap = dataList[iterator:iterator + 3]
+iterator = fullGenreList[0]['num']
 print("ITERATOR: " + str(iterator))
 ####smallRap = data['audio_features'][fullGenreList[0]['num']-3:fullGenreList[0]['num']]
-#print("\nsmallRAP: ")
-#print(type(smallRap))
-#print(str(len(smallRap)))
-#print(smallRap)
+print("\nsmallRAP: ")
+print(type(smallRap))
+print(str(len(smallRap)))
+print(smallRap)
 
 #CHECK MY WORK
 #we have to stair step this by only making rock songs in bigRock by basing off where we were
@@ -240,10 +253,20 @@ print("ITERATOR: " + str(iterator))
 bigRock = dataList[iterator:iterator+fullGenreList[1]['num']-3]
 iterator += fullGenreList[1]['num']-3
 print("ITERATOR: " + str(iterator))
-smallRock = dataList[iterator:iterator+fullGenreList[1]['num']]
-iterator += fullGenreList[1]['num']
-print("ITERATOR: " + str(iterator))
+print("\nsmallROCK: ")
+print(type(bigRock))
+print(str(len(bigRock)))
+print(str(len(bigRock)))
+print(bigRock)
 
+smallRock = dataList[iterator:iterator+3]
+iterator += 3
+print("ITERATOR: " + str(iterator))
+print("\nsmallROCK: ")
+print(type(smallRock))
+print(str(len(smallRock)))
+print(str(len(smallRock)))
+print(smallRock)
 #print(str(fullGenreList[1]['num']))
 #print(str(fullGenreList[2]['num']))
 bigPop = ""
@@ -252,13 +275,16 @@ bigPop = dataList[iterator:iterator+fullGenreList[2]['num']-3]
 iterator += fullGenreList[2]['num']-3
 print("ITERATOR: " + str(iterator))
 print("BIG POP: ")
+print(str(len(bigPop)))
 print(bigPop)
 smallPop = ""
-smallPop = dataList[iterator:iterator+fullGenreList[2]['num']]
+smallPop = dataList[iterator:iterator+3]
 print("ITERATOR: " + str(iterator))
 #smallPop = data['audio_features'][fullGenreList[2]['num']-3:fullGenreList[2]['num']]
 print("SMALL POP: ")
+print(str(len(smallPop)))
 print(smallPop)
+#22, 40, 40
 
 
 #now replace with correct genres
@@ -295,19 +321,19 @@ print("BIG ROCK : ")
 print(len(bigRock))
 print(bigRock)
 '''
-print("\n")
-print("HERHEHERHERHERHERHEHEHREHR")
-print("SMALL ROCK:    ")
-print(len(smallRock))
-print(smallRock)
-print("\n")
-print("BIG POP \n")
-print(len(bigPop))
-print(bigPop)
-print("\n")
-print("SMALL POP \n")
-print(len(smallPop))
-print(smallPop)
+#print("\n")
+#print("HERHEHERHERHERHERHEHEHREHR")
+#print("SMALL ROCK:    ")
+#print(len(smallRock))
+#print(smallRock)
+#print("\n")
+#print("BIG POP \n")
+#print(len(bigPop))
+#print(bigPop)
+#print("\n")
+#print("SMALL POP \n")
+#print(len(smallPop))
+#print(smallPop)
 
 
 lastBig = {'bruh': (bigRap+bigRock+bigPop)}
@@ -331,3 +357,11 @@ json.dump({'bruh': smallRap}, file, ensure_ascii=False, indent=4)
 file.close()
 '''
 
+#TODO PROBLEMS:
+#the data should be 101 songs long, not 60
+#in any case, when i try to copy data['audio_features], I get a list of 20 elements and they look ok 
+#^individually, but there should be 101, but at least 60
+
+#i think its bc spotify api only accepts 20?????? NOPE it accepts up to 100
+
+#I think the problem is the way I'm appending to the dict 

@@ -131,7 +131,7 @@ for i in range(0,5,1): #loop through each main segment
     if response.status_code == 200:
         #first case establishes the structure - must keep
         if (i==0):
-            print("FIRSTFIRST")
+            #print("FIRSTFIRST")
             firstjson = json.loads(response.text) #take in the json response
             data = firstjson #set data to this, we need to do it this way 
             #to get the append structure!
@@ -167,54 +167,37 @@ for i in range(0,5,1): #loop through each main segment
 
 
 
-#iterationNum = floor()
-print("\nHEREHERHEREHRHERHERHERH\n")
-print(type(data))
-print(data)
+#KEEP FOR DEBUGGING
+#print("\nHEREHERHEREHRHERHERHERH\n")
+#print(type(data))
+#print(data)
 
 
 
+#******************************************CLEAN UP DATA BY PUTTING EACH INTO A STRING SEGMENTED BY GENRE*********************************************************************
 
 
-#rn, data is a string, we must change it to a list and segment it 
-# URL for getting audio features
-####url = "https://api.spotify.com/v1/audio-features?ids="
+#I promise you ik how to program, I am doing this rawdog because we will add more genres in the future but I promise you ik this is slow but it is readable
 
+#**The idea here is to segment 90% of the data into the training data, and like 10% into test data
+#training data is one file, test data is the other file
+#we need to make it a string to clean it up
+#spotify api is spotty at best, so we don't actually know how many songs we're going to get
+#that's why we need to do it this way ugh
+print("total songs: " + str(totalSongs))
+print(fullGenreList)
 
-'''
+bigRap = data['audio_features'][:fullGenreList[0]['num']-3]
+smallRap = data['audio_features'][fullGenreList[0]['num']-3:fullGenreList[0]['num']]
 
-full_url = url + data
+#CHECK MY WORK
+#we have to stair step this by only making rock songs in bigRock by basing off where we were
+bigRock = data['audio_features'][fullGenreList[0]['num']:fullGenreList[1]['num']-3]
+smallRock = data['audio_features'][fullGenreList[1]['num']-3:fullGenreList[1]['num']]
 
-# Set up the Bearer token
-headers = {"Authorization": f"Bearer {token}"}
+bigPop = data['audio_features'][fullGenreList[1]['num']:fullGenreList[2]['num']-3]
+smallPop = data['audio_features'][fullGenreList[2]['num']-3:fullGenreList[2]['num']]
 
-# we must make multipe requests 
-response = requests.get(full_url, headers=headers)
-
-# Check if the request was successful
-holder = ""
-if response.status_code == 200:
-    # Load the JSON data
-    data = json.loads(response.text)
-    ###optumdata = str(data)
-
-else:
-    print(f"Request failed with status code {response.status_code}: {response.text}")
-
-'''
-#data is json rn, rn I am segmenting the data into the reg set and the testing set in a 10% ratio
-#TODO make this dynamic
-bigRap = data['audio_features'][:18]
-smallRap = data['audio_features'][18:20]
-
-bigRock = data['audio_features'][20:38]
-smallRock = data['audio_features'][38:40]
-
-bigPop = data['audio_features'][40:58]
-smallPop = data['audio_features'][58:60]
-
-#bigfile = data['audio_features'][:-3]
-#smallfile = data['audio_features'][-3:]
 
 #now replace with correct genres
 bigRap = str(bigRap).replace('\'danceability\'', '\'genre\': \"Rap\", \'danceability\'').replace("\'", "\"")
@@ -239,7 +222,8 @@ smallPop = json.loads(smallPop)
 lastBig = {'bruh': (bigRap+bigRock+bigPop)}
 lastSmall = {'bruh': (smallRap+smallRock+smallPop)}
 
-with open('bigfile.json', 'w') as f:
+#WRITE TO FILE
+with open('bigfile.json', 'w') as f: #btw the 'w' parameter here clears whatev is in the file
     json.dump(lastBig, f, ensure_ascii=False, indent=4)
     f.close()
 

@@ -168,11 +168,21 @@ for i in range(0,5,1): #loop through each main segment
 
 
 #KEEP FOR DEBUGGING
-#print("\nHEREHERHEREHRHERHERHERH\n")
-#print(type(data))
+print("\nH&&&&&&&&&&&&&&&&&&&&&&&&&&&\n")
+print(type(data))
 #print(data)
-
-
+print("total songs: " + str(totalSongs))
+print(fullGenreList)
+dataList = data['audio_features']
+print("LEN of data list: " + str(len(dataList)))
+print("AQUIIII: ")
+print(dataList[0])
+print("\n")
+#print(dataList)
+for i in range(0, len(dataList),1):
+    print("\nINDEX: " + str(i))
+    print(dataList[i])
+print("\n OBER")
 
 #******************************************CLEAN UP DATA BY PUTTING EACH INTO A STRING SEGMENTED BY GENRE*********************************************************************
 
@@ -184,19 +194,71 @@ for i in range(0,5,1): #loop through each main segment
 #we need to make it a string to clean it up
 #spotify api is spotty at best, so we don't actually know how many songs we're going to get
 #that's why we need to do it this way ugh
-print("total songs: " + str(totalSongs))
-print(fullGenreList)
 
-bigRap = data['audio_features'][:fullGenreList[0]['num']-3]
-smallRap = data['audio_features'][fullGenreList[0]['num']-3:fullGenreList[0]['num']]
+#print("data should be a list rn")
+#print(type(data['audio_features']))
+#print(data['audio_features'])
+
+dataList = data['audio_features']
+print("LENGTH OF DATALIST: " + str(len(dataList)))
+
+
+#bigRap = data['audio_features'][:fullGenreList[0]['num']-3]
+#smallRap = data['audio_features'][fullGenreList[0]['num']-3:fullGenreList[0]['num']]
 
 #CHECK MY WORK
 #we have to stair step this by only making rock songs in bigRock by basing off where we were
-bigRock = data['audio_features'][fullGenreList[0]['num']:fullGenreList[1]['num']-3]
-smallRock = data['audio_features'][fullGenreList[1]['num']-3:fullGenreList[1]['num']]
+#bigRock = data['audio_features'][fullGenreList[0]['num']:fullGenreList[1]['num']-3]
+#smallRock = data['audio_features'][fullGenreList[1]['num']-3:fullGenreList[1]['num']]
 
-bigPop = data['audio_features'][fullGenreList[1]['num']:fullGenreList[2]['num']-3]
-smallPop = data['audio_features'][fullGenreList[2]['num']-3:fullGenreList[2]['num']]
+#bigPop = data['audio_features'][fullGenreList[1]['num']:fullGenreList[2]['num']-3]
+#smallPop = data['audio_features'][fullGenreList[2]['num']-3:fullGenreList[2]['num']]
+
+#redo
+bigRap = dataList[:fullGenreList[0]['num']-3]
+iterator = fullGenreList[0]['num']-3
+print("ITERATOR: " + str(iterator))
+#print("\nBIGRAP: ")
+#print(type(bigRap))
+#print(str(len(bigRap)))
+#print(bigRap)
+
+smallRap = dataList[iterator:iterator + fullGenreList[0]['num']]
+iterator += fullGenreList[0]['num']
+print("ITERATOR: " + str(iterator))
+####smallRap = data['audio_features'][fullGenreList[0]['num']-3:fullGenreList[0]['num']]
+#print("\nsmallRAP: ")
+#print(type(smallRap))
+#print(str(len(smallRap)))
+#print(smallRap)
+
+#CHECK MY WORK
+#we have to stair step this by only making rock songs in bigRock by basing off where we were
+#bigRock = data['audio_features'][fullGenreList[0]['num']:fullGenreList[1]['num']-3]
+#smallRock = data['audio_features'][fullGenreList[1]['num']-3:fullGenreList[1]['num']]
+
+bigRock = dataList[iterator:iterator+fullGenreList[1]['num']-3]
+iterator += fullGenreList[1]['num']-3
+print("ITERATOR: " + str(iterator))
+smallRock = dataList[iterator:iterator+fullGenreList[1]['num']]
+iterator += fullGenreList[1]['num']
+print("ITERATOR: " + str(iterator))
+
+#print(str(fullGenreList[1]['num']))
+#print(str(fullGenreList[2]['num']))
+bigPop = ""
+#bigPop = data['audio_features'][fullGenreList[1]['num']:fullGenreList[2]['num']-3]
+bigPop = dataList[iterator:iterator+fullGenreList[2]['num']-3]
+iterator += fullGenreList[2]['num']-3
+print("ITERATOR: " + str(iterator))
+print("BIG POP: ")
+print(bigPop)
+smallPop = ""
+smallPop = dataList[iterator:iterator+fullGenreList[2]['num']]
+print("ITERATOR: " + str(iterator))
+#smallPop = data['audio_features'][fullGenreList[2]['num']-3:fullGenreList[2]['num']]
+print("SMALL POP: ")
+print(smallPop)
 
 
 #now replace with correct genres
@@ -218,6 +280,35 @@ smallRock = json.loads(smallRock)
 
 bigPop = json.loads(bigPop)
 smallPop = json.loads(smallPop)
+
+'''
+print("lists of the stuffs"+"\n")
+print("BIG RAP: \n")
+print(len(bigRap))
+print(bigRap)
+print("\n")
+print("SMALL RAP: \n")
+print(len(smallRap))
+print(smallRap)
+print("\n")
+print("BIG ROCK : ")
+print(len(bigRock))
+print(bigRock)
+'''
+print("\n")
+print("HERHEHERHERHERHERHEHEHREHR")
+print("SMALL ROCK:    ")
+print(len(smallRock))
+print(smallRock)
+print("\n")
+print("BIG POP \n")
+print(len(bigPop))
+print(bigPop)
+print("\n")
+print("SMALL POP \n")
+print(len(smallPop))
+print(smallPop)
+
 
 lastBig = {'bruh': (bigRap+bigRock+bigPop)}
 lastSmall = {'bruh': (smallRap+smallRock+smallPop)}

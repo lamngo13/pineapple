@@ -6,7 +6,7 @@ import requests, json, os, time, base64, math
 # This dict has the search url for each genre, the number will count the number of songs per genre returned
 classicpianoDict = {"url": "https://api.spotify.com/v1/search?q=genre%Classical-Piano&type=track", "num": 0}
 rockDict = {"url": "https://api.spotify.com/v1/search?q=genre%Rock&type=track", "num": 0}
-popDict = {"url": "https://api.spotify.com/v1/search?q=genre%Pop&type=track", "num": 0}
+popDict = {"url": "https://api.spotify.com/v1/search?q=genre%Anime&type=track", "num": 0}
 
 #add the dictionaries to a list of dicts called fullGenreList
 fullGenreList = [classicpianoDict, rockDict, popDict]
@@ -60,7 +60,7 @@ data = ""
 #the inner loop (offset) will send multiple requests to a single genre url,
 #^it increases the offset each time to get more songs
 for genre in fullGenreList:
-    for offset in range(0, 80, 20):
+    for offset in range(0, 200, 20):
         tempurl = genre['url']+"&offset="+str(offset)  #appends the offset parameter to the url
         #important debugging
         #print("\n")

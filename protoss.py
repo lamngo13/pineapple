@@ -4,12 +4,12 @@ import requests, json, os, time, base64, math
 
 
 # This dict has the search url for each genre, the number will count the number of songs per genre returned
-rapDict = {"url": "https://api.spotify.com/v1/search?q=genre%Rap&type=track", "num": 0}
+classicpianoDict = {"url": "https://api.spotify.com/v1/search?q=genre%Classical-Piano&type=track", "num": 0}
 rockDict = {"url": "https://api.spotify.com/v1/search?q=genre%Rock&type=track", "num": 0}
 popDict = {"url": "https://api.spotify.com/v1/search?q=genre%Pop&type=track", "num": 0}
 
 #add the dictionaries to a list of dicts called fullGenreList
-fullGenreList = [rapDict, rockDict, popDict]
+fullGenreList = [classicpianoDict, rockDict, popDict]
 
 
 #************************AUTHORIZATION****************************************************************************************************************
@@ -206,15 +206,15 @@ dataList = data['audio_features']
 #that's why we need to do it this way ugh
 
 
-bigRap = dataList[:fullGenreList[0]['num']-3]
-iterator = fullGenreList[0]['num']-3
-#the idea is to get the first 0 to [number of rap songs - 3] as the first var
-#and the last 3 rap songs as the 2nd var
+bigclassicpiano = dataList[:fullGenreList[0]['num']]
+iterator = fullGenreList[0]['num']
+#the idea is to get the first 0 to [number of classicpiano songs - 3] as the first var
+#and the last 3 classicpiano songs as the 2nd var
 #each var (rn is just a string) will be cleaned up later
 #and then appended to the appropriate file
 
-smallRap = dataList[iterator:iterator + 3]
-iterator = fullGenreList[0]['num']
+#smallclassicpiano = dataList[iterator:iterator + 3]
+#iterator = fullGenreList[0]['num']
 #the iterator is necessary ish to keep our place in the list
 #^the point is we traverse the list to find songs of the right genre
 #and then assign those songs the genre by search num
@@ -223,45 +223,45 @@ iterator = fullGenreList[0]['num']
 
 
 #we have to stair step this by only making rock songs in bigRock by basing off where we were
-bigRock = dataList[iterator:iterator+fullGenreList[1]['num']-3]
-iterator += fullGenreList[1]['num']-3
+bigRock = dataList[iterator:iterator+fullGenreList[1]['num']]
+iterator += fullGenreList[1]['num']
 
-smallRock = dataList[iterator:iterator+3]
-iterator += 3
+#smallRock = dataList[iterator:iterator+3]
+#iterator += 3
 
-bigPop = dataList[iterator:iterator+fullGenreList[2]['num']-3]
-iterator += fullGenreList[2]['num']-3
+bigPop = dataList[iterator:iterator+fullGenreList[2]['num']]
+iterator += fullGenreList[2]['num']
 
-smallPop = dataList[iterator:iterator+3]
+#smallPop = dataList[iterator:iterator+3]
 #keep below line for future work
-iterator += 3
+#iterator += 3
 
 #TODO COFFEE add more genres here, 
 
 
-#OK NOW we have the rap, rock, pop, etc songs sorted into a straight string, 
+#OK NOW we have the classicpiano, rock, pop, etc songs sorted into a straight string, 
 #(I mean its a string rn but we can convert back to a dict)
 
 #now replace with correct genres
-bigRap = str(bigRap).replace('\'danceability\'', '\'genre\': \"Rap\", \'danceability\'').replace("\'", "\"")
-smallRap = str(smallRap).replace('\'danceability\'', '\'genre\': \"Rap\", \'danceability\'').replace("\'", "\"")
+bigclassicpiano = str(bigclassicpiano).replace('\'danceability\'', '\'genre\': \"classicpiano\", \'danceability\'').replace("\'", "\"")
+#smallclassicpiano = str(smallclassicpiano).replace('\'danceability\'', '\'genre\': \"classicpiano\", \'danceability\'').replace("\'", "\"")
 
 bigRock = str(bigRock).replace('\'danceability\'', '\'genre\': \"Rock\", \'danceability\'').replace("\'", "\"")
-smallRock = str(smallRock).replace('\'danceability\'', '\'genre\': \"Rock\", \'danceability\'').replace("\'", "\"")
+#smallRock = str(smallRock).replace('\'danceability\'', '\'genre\': \"Rock\", \'danceability\'').replace("\'", "\"")
 
 bigPop = str(bigPop).replace('\'danceability\'', '\'genre\': \"Pop\", \'danceability\'').replace("\'", "\"")
-smallPop = str(smallPop).replace('\'danceability\'', '\'genre\': \"Pop\", \'danceability\'').replace("\'", "\"")
+#smallPop = str(smallPop).replace('\'danceability\'', '\'genre\': \"Pop\", \'danceability\'').replace("\'", "\"")
 
 
 #remake into JSON to put into file as a value that can be easily read by ML libraries 
-bigRap = json.loads(bigRap)
-smallRap = json.loads(smallRap)
+bigclassicpiano = json.loads(bigclassicpiano)
+#smallclassicpiano = json.loads(smallclassicpiano)
 
 bigRock = json.loads(bigRock)
-smallRock = json.loads(smallRock)
+#smallRock = json.loads(smallRock)
 
 bigPop = json.loads(bigPop)
-smallPop = json.loads(smallPop)
+#smallPop = json.loads(smallPop)
 
 
 #OK SO THIS IS IMPORTANT********************************************
@@ -269,17 +269,17 @@ smallPop = json.loads(smallPop)
 #and the value is a LIST of DICTS - everything we need
 #this is werid asf to me, but apparently this is how a ton of stuff is done
 #so this is the right way.
-lastBig = {'bruh': (bigRap+bigRock+bigPop)}
-lastSmall = {'bruh': (smallRap+smallRock+smallPop)}
+lastBig = {'bruh': (bigclassicpiano+bigRock+bigPop)}
+#lastSmall = {'bruh': (smallclassicpiano+smallRock+smallPop)}
 
 #WRITE TO FILE
 with open('funbigfile.json', 'w') as f: #btw the 'w' parameter here clears whatev is in the file
     json.dump(lastBig, f, ensure_ascii=False, indent=4)
     f.close()
 
-with open('funsmallfile.json', 'w') as f:
-    json.dump(lastSmall, f, ensure_ascii=False, indent=4)
-    f.close()
+#with open('funsmallfile.json', 'w') as f:
+#    json.dump(lastSmall, f, ensure_ascii=False, indent=4)
+#    f.close()
 
 
 #TODO 

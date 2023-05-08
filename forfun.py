@@ -283,16 +283,16 @@ dataList = data['audio_features']
 #iterator = fullGenreList[0]['num']-3
 #smallRap = dataList[iterator:iterator + 3]
 #iterator = fullGenreList[0]['num']
-bigRnb = []
-bigSalsa = []
-bigReggaeton = []
-bigMetal = []
-bigCountry = []
-bigRap = []
-bigClassical = []
-bigRock = []
-bigPhonk = []
-bigJazz = []
+bigRnb = ""
+bigSalsa = ""
+bigReggaeton = ""
+bigMetal = ""
+bigCountry = ""
+bigRap = ""
+bigClassical = ""
+bigRock = ""
+bigPhonk = ""
+bigJazz = ""
 
 listingholders = [bigRnb,bigSalsa,bigReggaeton,bigMetal,bigCountry,bigRap,bigClassical,bigRock,bigPhonk,bigJazz]
 
@@ -343,7 +343,7 @@ bigRock = str(bigRock).replace('\'danceability\'', '\'genre\': \"Rock\", \'dance
 bigPhonk = str(bigPhonk).replace('\'danceability\'', '\'genre\': \"Phonk\", \'danceability\'').replace("\'", "\"")
 
 
-bigJazz = str(bigJazz).replace('\'danceability\'', '\'genre\': \"Rap\", \'danceability\'').replace("\'", "\"")
+bigJazz = str(bigJazz).replace('\'danceability\'', '\'genre\': \"Jazz\", \'danceability\'').replace("\'", "\"")
 
 
 
@@ -368,7 +368,7 @@ bigJazz = json.loads(bigJazz)
 #and the value is a LIST of DICTS - everything we need
 #this is werid asf to me, but apparently this is how a ton of stuff is done
 #so this is the right way.
-lastBig = {'bruh': ( bigMetal, bigRock)}
+lastBig = {'bruh': ( bigMetal + bigClassical + bigReggaeton + bigSalsa + bigPhonk + bigCountry)}
 
 #[rnbDict, salsaDict, reggaetonDict, metalDict, countryDict, rapDict, classicalDict, rockDict, phonkDict, jazzDict]
 #WRITE TO FILE

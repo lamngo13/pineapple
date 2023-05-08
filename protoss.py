@@ -207,6 +207,9 @@ dataList = data['audio_features']
 
 
 bigclassicpiano = dataList[:fullGenreList[0]['num']]
+print("type of bigclassicalpiano" + str(type(bigclassicpiano)))
+print("\n")
+print(bigclassicpiano)
 iterator = fullGenreList[0]['num']
 #the idea is to get the first 0 to [number of classicpiano songs - 3] as the first var
 #and the last 3 classicpiano songs as the 2nd var

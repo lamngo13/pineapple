@@ -98,7 +98,7 @@ for genre in fullGenreListPlaylist:
             #tough
             genre['num'] += len(data_in['items'])
             bruh = len(data_in['items'])
-            print("LEN OF DATA IN ITEMS" + str(bruh))
+            #print("LEN OF DATA IN ITEMS" + str(bruh))
 
             #print("dummy")
             #print("\nHEREERHERHERHEREH")
@@ -116,8 +116,8 @@ for genre in fullGenreListPlaylist:
             #the json has a LOT LOT LOT of data; this line gets just the song id from the whole returned json object
             for i in range(0, len(data_in['items']), 1):
                 holder += data_in['items'][i]['track']['uri']
-                print("\n")
-                print(data_in['items'][i]['track']['uri'])
+                #print("\n")
+                #print(data_in['items'][i]['track']['uri'])
 
             data += holder #append all the song ids to a list, this is okay because we keep note of the order and number
 
@@ -283,105 +283,81 @@ dataList = data['audio_features']
 #iterator = fullGenreList[0]['num']-3
 #smallRap = dataList[iterator:iterator + 3]
 #iterator = fullGenreList[0]['num']
+bigRnb = []
+bigSalsa = []
+bigReggaeton = []
+bigMetal = []
+bigCountry = []
+bigRap = []
+bigClassical = []
+bigRock = []
+bigPhonk = []
+bigJazz = []
 
-bigRnb = dataList[:fullGenreListPlaylist[0]['num']]
-iterator = fullGenreListPlaylist[0]['num']
-smallRnb = dataList[iterator:iterator]
+listingholders = [bigRnb,bigSalsa,bigReggaeton,bigMetal,bigCountry,bigRap,bigClassical,bigRock,bigPhonk,bigJazz]
 
-bigSalsa = dataList[:fullGenreListPlaylist[1]['num']]
-iterator += fullGenreListPlaylist[1]['num']
-smallSalsa = dataList[iterator:iterator]
+iterator = 0
+genreIterator = 0
+for genre in listingholders:
+    listingholders[genreIterator] = dataList[iterator:iterator+fullGenreListPlaylist[genreIterator]['num']]
+    iterator += fullGenreListPlaylist[genreIterator]['num']
+    genreIterator += 1
 
-bigReggaeton = dataList[:fullGenreListPlaylist[2]['num']]
-iterator += fullGenreListPlaylist[2]['num']
-smallReggaeton = dataList[iterator:iterator]
 
-bigMetal = dataList[:fullGenreListPlaylist[3]['num']]
-iterator += fullGenreListPlaylist[3]['num']
-smallMetal = dataList[iterator:iterator]
+bigRnb = listingholders[0]
+bigSalsa = listingholders[1]
+bigReggaeton = listingholders[2]
+bigMetal = listingholders[3]
+bigCountry = listingholders[4]
+bigRap = listingholders[5]
+bigClassical = listingholders[6]
+bigRock = listingholders[7]
+bigPhonk = listingholders[8]
+bigJazz = listingholders[9]
 
-bigCountry= dataList[:fullGenreListPlaylist[4]['num']]
-iterator += fullGenreListPlaylist[4]['num']
-smallCountry = dataList[iterator:iterator]
 
-bigRap= dataList[:fullGenreListPlaylist[5]['num']]
-iterator += fullGenreListPlaylist[5]['num']
-smallRap = dataList[iterator:iterator]
-
-bigClassical= dataList[:fullGenreListPlaylist[6]['num']]
-iterator += fullGenreListPlaylist[6]['num']
-smallClassical = dataList[iterator:iterator]
-
-bigRock= dataList[:fullGenreListPlaylist[7]['num']]
-iterator += fullGenreListPlaylist[7]['num']
-smallRock = dataList[iterator:iterator]
-
-bigPhonk= dataList[:fullGenreListPlaylist[8]['num']]
-iterator += fullGenreListPlaylist[8]['num']
-smallPhonk = dataList[iterator:iterator]
-
-bigJazz= dataList[:fullGenreListPlaylist[9]['num']]
-iterator += fullGenreListPlaylist[9]['num']
-smallJazz = dataList[iterator:iterator]
 
 #OK NOW we have the rap, rock, pop, etc songs sorted into a straight string, 
 #(I mean its a string rn but we can convert back to a dict)
 
 #now replace with correct genres
 bigRnb = str(bigRnb).replace('\'danceability\'', '\'genre\': \"Rnb\", \'danceability\'').replace("\'", "\"")
-smallRnb = str(smallRnb).replace('\'danceability\'', '\'genre\': \"Rnb\", \'danceability\'').replace("\'", "\"")
 
 bigSalsa = str(bigSalsa).replace('\'danceability\'', '\'genre\': \"Salsa\", \'danceability\'').replace("\'", "\"")
-smallSalsa = str(smallSalsa).replace('\'danceability\'', '\'genre\': \"Salsa\", \'danceability\'').replace("\'", "\"")
 
 bigReggaeton = str(bigReggaeton).replace('\'danceability\'', '\'genre\': \"Reggaeton\", \'danceability\'').replace("\'", "\"")
-smallReggaeton = str(smallReggaeton).replace('\'danceability\'', '\'genre\': \"Reggaeton\", \'danceability\'').replace("\'", "\"")
 
 bigMetal = str(bigMetal).replace('\'danceability\'', '\'genre\': \"Metal\", \'danceability\'').replace("\'", "\"")
-smallMetal = str(smallMetal).replace('\'danceability\'', '\'genre\': \"Metal\", \'danceability\'').replace("\'", "\"")
 
 bigCountry = str(bigCountry).replace('\'danceability\'', '\'genre\': \"Country\", \'danceability\'').replace("\'", "\"")
-smallCountry = str(smallCountry).replace('\'danceability\'', '\'genre\': \"Country\", \'danceability\'').replace("\'", "\"")
 
 bigRap = str(bigRap).replace('\'danceability\'', '\'genre\': \"Rap\", \'danceability\'').replace("\'", "\"")
-smallRap = str(smallRap).replace('\'danceability\'', '\'genre\': \"Rap\", \'danceability\'').replace("\'", "\"")
+
 
 bigClassical = str(bigClassical).replace('\'danceability\'', '\'genre\': \"Classical\", \'danceability\'').replace("\'", "\"")
-smallClassical = str(smallClassical).replace('\'danceability\'', '\'genre\': \"Classical\", \'danceability\'').replace("\'", "\"")
+
 
 bigRock = str(bigRock).replace('\'danceability\'', '\'genre\': \"Rock\", \'danceability\'').replace("\'", "\"")
-smallRock = str(smallRock).replace('\'danceability\'', '\'genre\': \"Rock\", \'danceability\'').replace("\'", "\"")
+
 
 bigPhonk = str(bigPhonk).replace('\'danceability\'', '\'genre\': \"Phonk\", \'danceability\'').replace("\'", "\"")
-smallPhonk = str(smallPhonk).replace('\'danceability\'', '\'genre\': \"Phonk\", \'danceability\'').replace("\'", "\"")
+
 
 bigJazz = str(bigJazz).replace('\'danceability\'', '\'genre\': \"Rap\", \'danceability\'').replace("\'", "\"")
-smallJazz = str(smallJazz).replace('\'danceability\'', '\'genre\': \"Rap\", \'danceability\'').replace("\'", "\"")
-#bigPop = str(bigPop).replace('\'danceability\'', '\'genre\': \"Pop\", \'danceability\'').replace("\'", "\"")
-#smallPop = str(smallPop).replace('\'danceability\'', '\'genre\': \"Pop\", \'danceability\'').replace("\'", "\"")
+
 
 
 #remake into JSON to put into file as a value that can be easily read by ML libraries 
 bigRnb = json.loads(bigRnb)
-smallRnb = json.loads(smallRnb)
 bigSalsa = json.loads(bigSalsa)
-smallSalsa = json.loads(smallSalsa)
 bigReggaeton = json.loads(bigReggaeton)
-smallReggaeton = json.loads(smallReggaeton)
 bigMetal = json.loads(bigMetal)
-smallMetal = json.loads(smallMetal)
 bigCountry = json.loads(bigCountry)
-smallCountry = json.loads(smallCountry)
 bigRap = json.loads(bigRap)
-smallRap = json.loads(smallRap)
 bigClassical = json.loads(bigClassical)
-smallClassical = json.loads(smallClassical)
 bigRock = json.loads(bigRock)
-smallRock = json.loads(smallRock)
 bigPhonk = json.loads(bigPhonk)
-smallPhonk = json.loads(smallPhonk)
 bigJazz = json.loads(bigJazz)
-smallJazz = json.loads(smallJazz)
 
 #bigPop = json.loads(bigPop)
 #smallPop = json.loads(smallPop)
@@ -392,8 +368,7 @@ smallJazz = json.loads(smallJazz)
 #and the value is a LIST of DICTS - everything we need
 #this is werid asf to me, but apparently this is how a ton of stuff is done
 #so this is the right way.
-lastBig = {'bruh': (bigRnb+ bigSalsa +bigReggaeton +bigMetal +bigCountry + bigRap + bigClassical + bigRock + bigPhonk +bigJazz)}
-lastSmall = {'bruh': (smallRnb+ smallSalsa +smallReggaeton +smallMetal +smallCountry + smallRap + smallClassical + smallRock + smallPhonk +smallJazz)}
+lastBig = {'bruh': ( bigMetal, bigRock)}
 
 #[rnbDict, salsaDict, reggaetonDict, metalDict, countryDict, rapDict, classicalDict, rockDict, phonkDict, jazzDict]
 #WRITE TO FILE
@@ -401,14 +376,3 @@ with open('funbigfile.json', 'w') as f: #btw the 'w' parameter here clears whate
     json.dump(lastBig, f, ensure_ascii=False, indent=4)
     f.close()
 
-with open('funsmallfile.json', 'w') as f:
-    json.dump(lastSmall, f, ensure_ascii=False, indent=4)
-    f.close()
-
-
-#TODO 
-#next steps:
-#- refine search to only do most popular songs maybe
-#- add more genres 
-#- ......?
-#- profit

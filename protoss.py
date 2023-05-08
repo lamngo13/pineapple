@@ -5,8 +5,8 @@ import requests, json, os, time, base64, math
 
 # This dict has the search url for each genre, the number will count the number of songs per genre returned
 classicpianoDict = {"url": "https://api.spotify.com/v1/search?q=genre%Classical-Piano&type=track", "num": 0}
-rockDict = {"url": "https://api.spotify.com/v1/search?q=genre%Rock&type=track", "num": 0}
-popDict = {"url": "https://api.spotify.com/v1/search?q=genre%Anime&type=track", "num": 0}
+rockDict = {"url": "https://api.spotify.com/v1/search?q=genre%Electronica&type=track", "num": 0}
+popDict = {"url": "https://api.spotify.com/v1/search?q=genre%Screamo&type=track", "num": 0}
 
 #add the dictionaries to a list of dicts called fullGenreList
 fullGenreList = [classicpianoDict, rockDict, popDict]
@@ -18,7 +18,6 @@ file = open(".secret", "r", encoding="utf-8")
 shword = file.readlines()
 #client_id = shword[0].strip("\n")
 #client_secret = shword[1]
-
 #The secret is supposed to be hidden but idc, this should work on anyone's machine, NO AUTH TOKEN REQUIRED YAY LFGO
 
 
@@ -60,7 +59,7 @@ data = ""
 #the inner loop (offset) will send multiple requests to a single genre url,
 #^it increases the offset each time to get more songs
 for genre in fullGenreList:
-    for offset in range(0, 200, 20):
+    for offset in range(0, 120, 20):
         tempurl = genre['url']+"&offset="+str(offset)  #appends the offset parameter to the url
         #important debugging
         #print("\n")

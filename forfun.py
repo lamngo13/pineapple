@@ -10,16 +10,16 @@ popDict = {"url": "https://api.spotify.com/v1/search?q=genre%Pop&type=track", "n
 
 #Nori: This dict is almost identical to the one above, only using a getPlaylistItems call rather than using the Spotify search API
 #Nori: Defined the limit to be 20 so as to not have to change the built-in offset code
-rnbDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DX4SBhb3fqCJd/tracks?limit=20", "num": 0}
-salsaDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DX4qKWGR9z0LI/tracks?limit=20", "num": 0}
-reggaetonDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DWY7IeIP1cdjF/tracks?limit=20", "num": 0}
-metalDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DWTcqUzwhNmKv/tracks?limit=20", "num": 0}
-countryDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DX1lVhptIYRda/tracks?limit=20", "num": 0}
-rapDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DX0XUsuxWHRQd/tracks?limit=20", "num": 0}
-classicalDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DWWEJlAGA9gs0/tracks?limit=20", "num": 0}
-rockDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DXcF6B6QPhFDv/tracks?limit=20", "num": 0}
-phonkDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DWWY64wDtewQt/tracks?limit=20", "num": 0}
-jazzDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DX7YCknf2jT6s/tracks?limit=20", "num": 0}
+rnbDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DX4SBhb3fqCJd/tracks?limit=50", "num": 0}
+salsaDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DX4qKWGR9z0LI/tracks?limit=50", "num": 0}
+reggaetonDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DWY7IeIP1cdjF/tracks?limit=50", "num": 0}
+metalDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DWTcqUzwhNmKv/tracks?limit=50", "num": 0}
+countryDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DX1lVhptIYRda/tracks?limit=50", "num": 0}
+rapDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DX0XUsuxWHRQd/tracks?limit=50", "num": 0}
+classicalDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DWWEJlAGA9gs0/tracks?limit=50", "num": 0}
+rockDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DXcF6B6QPhFDv/tracks?limit=50", "num": 0}
+phonkDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DWWY64wDtewQt/tracks?limit=50", "num": 0}
+jazzDict = {"url": "https://api.spotify.com/v1/playlists/37i9dQZF1DX7YCknf2jT6s/tracks?limit=50", "num": 0}
 #add the dictionaries to a list of dicts called fullGenreList
 #Nori: add the Playlist-derived dictionaries to fullGenreListPlaylist
 fullGenreList = [rapDict, rockDict, popDict]
@@ -73,8 +73,8 @@ data = ""
 #the inner loop (offset) will send multiple requests to a single genre url,
 #^it increases the offset each time to get more songs
 for genre in fullGenreListPlaylist:
-    for offset in range(0, 51, 25):
-        tempurl = genre['url']+"&offset="+str(offset)  #appends the offset parameter to the url
+    for offset in range(0,1,1):
+        tempurl = genre['url']#appends the offset parameter to the url
         #important debugging
         #print("\n")
         #print(str(asdf))
@@ -82,7 +82,7 @@ for genre in fullGenreListPlaylist:
         #asdf+= 1
 
         #make the request with the augmented offset and auth token
-        response = requests.get(tempurl, headers=headers)
+        response = requests.get(tempurl, headers=headers, stream=False)
         if response.status_code == 200:
 
             #read in response as a json object
@@ -96,17 +96,37 @@ for genre in fullGenreListPlaylist:
             #VERY VERY important for later 
             #FUN FACT spotify will return UNPREDICTABLE numbers of songs so we can't hardcode these numbers
             #tough
-            
-            genre['num'] = 50
+            genre['num'] += len(data_in['items'])
+            bruh = len(data_in['items'])
+            print("LEN OF DATA IN ITEMS" + str(bruh))
+
+            #print("dummy")
+            #print("\nHEREERHERHERHEREH")
+            #print(data_in['items'])
+            # with open('mad.txt', 'w') as f: #btw the 'w' parameter here clears whatev is in the file
+            #     f.write(str(genre))
+            #     f.write("\n")
+            #     f.write(str(len(data_in['items'])))
+            #     f.write(str(data_in['items']))
+            #     f.close()
+            ##genre['num'] = 50
+            #print("\nBRUH MACHINE ")
+            #print(len(data_in['audio_features']))
             #Nori test - print(tempurl, genre['num'])
             #the json has a LOT LOT LOT of data; this line gets just the song id from the whole returned json object
             for i in range(0, len(data_in['items']), 1):
-                holder += data_in['items'][i]['track']['uri']    
+                holder += data_in['items'][i]['track']['uri']
+                print("\n")
+                print(data_in['items'][i]['track']['uri'])
+
             data += holder #append all the song ids to a list, this is okay because we keep note of the order and number
+
+            #print("\nYURR")
+            #print("\n I: " + str(offset))
+            #print(holder)
             time.sleep(.1) #I'm brazy but i stg this makes it work better its just a bit
         else:
             print(f"Request failed with status code {response.status_code}: {response.text}")
-
 
 
 #make data into a LIST and clean it up
@@ -160,7 +180,7 @@ for i in range(0,5,1): #loop through each main segment
         #j counts to the segment size
 
     #send get request w full segmented URL
-    response = requests.get(full_url, headers=headers)
+    response = requests.get(full_url, headers=headers, stream=False)
     #print("FULL URL: " + full_url + "\n")
     #COFFEE
     #The URLs are correct; they are unique and there are the right number of them.
@@ -203,7 +223,6 @@ for i in range(0,5,1): #loop through each main segment
 
     else:
         print(f"Request failed with status code {response.status_code}: {response.text}")
-
 
 
 #KEEP FOR DEBUGGING
@@ -265,55 +284,45 @@ dataList = data['audio_features']
 #smallRap = dataList[iterator:iterator + 3]
 #iterator = fullGenreList[0]['num']
 
-bigRnb = dataList[:fullGenreListPlaylist[0]['num']-3]
-iterator = fullGenreListPlaylist[0]['num']-3
-smallRnb = dataList[iterator:iterator + 3]
-iterator += 3
+bigRnb = dataList[:fullGenreListPlaylist[0]['num']]
+iterator = fullGenreListPlaylist[0]['num']
+smallRnb = dataList[iterator:iterator]
 
-bigSalsa = dataList[:fullGenreListPlaylist[1]['num']-3]
-iterator += fullGenreListPlaylist[1]['num']-3
-smallSalsa = dataList[iterator:iterator + 3]
-iterator += 3
+bigSalsa = dataList[:fullGenreListPlaylist[1]['num']]
+iterator += fullGenreListPlaylist[1]['num']
+smallSalsa = dataList[iterator:iterator]
 
-bigReggaeton = dataList[:fullGenreListPlaylist[2]['num']-3]
-iterator += fullGenreListPlaylist[2]['num']-3
-smallReggaeton = dataList[iterator:iterator + 3]
-iterator += 3
+bigReggaeton = dataList[:fullGenreListPlaylist[2]['num']]
+iterator += fullGenreListPlaylist[2]['num']
+smallReggaeton = dataList[iterator:iterator]
 
-bigMetal = dataList[:fullGenreListPlaylist[3]['num']-3]
-iterator += fullGenreListPlaylist[3]['num']-3
-smallMetal = dataList[iterator:iterator + 3]
-iterator += 3
+bigMetal = dataList[:fullGenreListPlaylist[3]['num']]
+iterator += fullGenreListPlaylist[3]['num']
+smallMetal = dataList[iterator:iterator]
 
-bigCountry= dataList[:fullGenreListPlaylist[4]['num']-3]
-iterator += fullGenreListPlaylist[4]['num']-3
-smallCountry = dataList[iterator:iterator + 3]
-iterator += 3
+bigCountry= dataList[:fullGenreListPlaylist[4]['num']]
+iterator += fullGenreListPlaylist[4]['num']
+smallCountry = dataList[iterator:iterator]
 
-bigRap= dataList[:fullGenreListPlaylist[5]['num']-3]
-iterator += fullGenreListPlaylist[5]['num']-3
-smallRap = dataList[iterator:iterator + 3]
-iterator += 3
+bigRap= dataList[:fullGenreListPlaylist[5]['num']]
+iterator += fullGenreListPlaylist[5]['num']
+smallRap = dataList[iterator:iterator]
 
-bigClassical= dataList[:fullGenreListPlaylist[6]['num']-3]
-iterator += fullGenreListPlaylist[6]['num']-3
-smallClassical = dataList[iterator:iterator + 3]
-iterator += 3
+bigClassical= dataList[:fullGenreListPlaylist[6]['num']]
+iterator += fullGenreListPlaylist[6]['num']
+smallClassical = dataList[iterator:iterator]
 
-bigRock= dataList[:fullGenreListPlaylist[7]['num']-3]
-iterator += fullGenreListPlaylist[7]['num']-3
-smallRock = dataList[iterator:iterator + 3]
-iterator += 3
+bigRock= dataList[:fullGenreListPlaylist[7]['num']]
+iterator += fullGenreListPlaylist[7]['num']
+smallRock = dataList[iterator:iterator]
 
-bigPhonk= dataList[:fullGenreListPlaylist[8]['num']-3]
-iterator += fullGenreListPlaylist[8]['num']-3
-smallPhonk = dataList[iterator:iterator + 3]
-iterator += 3
+bigPhonk= dataList[:fullGenreListPlaylist[8]['num']]
+iterator += fullGenreListPlaylist[8]['num']
+smallPhonk = dataList[iterator:iterator]
 
-bigJazz= dataList[:fullGenreListPlaylist[9]['num']-3]
-iterator += fullGenreListPlaylist[9]['num']-3
-smallJazz = dataList[iterator:iterator + 3]
-iterator += 3
+bigJazz= dataList[:fullGenreListPlaylist[9]['num']]
+iterator += fullGenreListPlaylist[9]['num']
+smallJazz = dataList[iterator:iterator]
 
 #OK NOW we have the rap, rock, pop, etc songs sorted into a straight string, 
 #(I mean its a string rn but we can convert back to a dict)

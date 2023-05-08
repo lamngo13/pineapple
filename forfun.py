@@ -368,7 +368,8 @@ bigJazz = json.loads(bigJazz)
 #and the value is a LIST of DICTS - everything we need
 #this is werid asf to me, but apparently this is how a ton of stuff is done
 #so this is the right way.
-lastBig = {'bruh': ( bigMetal + bigJazz + bigReggaeton + bigSalsa + bigPhonk + bigRnb)}
+#Metal, Salsa, Jazz, Country, and Reggaeton
+lastBig = {'bruh': ( bigMetal + bigJazz + bigReggaeton + bigSalsa + bigCountry)}
 
 #[rnbDict, salsaDict, reggaetonDict, metalDict, countryDict, rapDict, classicalDict, rockDict, phonkDict, jazzDict]
 #WRITE TO FILE

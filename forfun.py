@@ -27,16 +27,16 @@ fullGenreListPlaylist = [rnbDict, salsaDict, reggaetonDict, metalDict, countryDi
 
 #************************AUTHORIZATION****************************************************************************************************************
 #opens the file with the secrets and reads them 
-#file = open(".secret", "r", encoding="utf-8")
-#shword = file.readlines()
-#client_id = shword[0].strip("\n")
-#client_secret = shword[1]
+file = open(".secret", "r", encoding="utf-8")
+shword = file.readlines()
+client_id = shword[0].strip("\n")
+client_secret = shword[1]
 
 #The secret is supposed to be hidden but idc, this should work on anyone's machine, NO AUTH TOKEN REQUIRED YAY LFGO
 
 
-client_id = "38102a72830649e8bffa570c0e40a0b8"
-client_secret = "28ba3a3963bc48309ca17c177a742e84"
+#client_id = "38102a72830649e8bffa570c0e40a0b8"
+#client_secret = "28ba3a3963bc48309ca17c177a742e84"
 #file.close()
 #id first then secret
 
@@ -67,8 +67,6 @@ headers = {"Authorization": f"Bearer {token}"}
 data = ""
 
 
-#debug: asdf = 1
-
 #the first loop goes through each of the genre urls
 #the inner loop (offset) will send multiple requests to a single genre url,
 #^it increases the offset each time to get more songs
@@ -98,32 +96,13 @@ for genre in fullGenreListPlaylist:
             #tough
             genre['num'] += len(data_in['items'])
             bruh = len(data_in['items'])
-            #print("LEN OF DATA IN ITEMS" + str(bruh))
 
-            #print("dummy")
-            #print("\nHEREERHERHERHEREH")
-            #print(data_in['items'])
-            # with open('mad.txt', 'w') as f: #btw the 'w' parameter here clears whatev is in the file
-            #     f.write(str(genre))
-            #     f.write("\n")
-            #     f.write(str(len(data_in['items'])))
-            #     f.write(str(data_in['items']))
-            #     f.close()
-            ##genre['num'] = 50
-            #print("\nBRUH MACHINE ")
-            #print(len(data_in['audio_features']))
-            #Nori test - print(tempurl, genre['num'])
             #the json has a LOT LOT LOT of data; this line gets just the song id from the whole returned json object
             for i in range(0, len(data_in['items']), 1):
                 holder += data_in['items'][i]['track']['uri']
-                #print("\n")
-                #print(data_in['items'][i]['track']['uri'])
 
             data += holder #append all the song ids to a list, this is okay because we keep note of the order and number
 
-            #print("\nYURR")
-            #print("\n I: " + str(offset))
-            #print(holder)
             time.sleep(.1) #I'm brazy but i stg this makes it work better its just a bit
         else:
             print(f"Request failed with status code {response.status_code}: {response.text}")
@@ -132,8 +111,6 @@ for genre in fullGenreListPlaylist:
 #make data into a LIST and clean it up
 data = data.replace("spotify:track:", ",")[1:]
 olddata = data.split(',') #note this is called OLDDATA
-#print("Data In:", len(data_in))
-#print("Data:", len(data))
 #stuff for api call 
 featureUrl = "https://api.spotify.com/v1/audio-features?ids=" #universal url for song lookup by id
 headers = {"Authorization": f"Bearer {token}"} #give auth token
@@ -149,18 +126,13 @@ totalSongs = len(fullGenreListPlaylist) * 50
 #get the many chunks of songs, and then the remainder
 iterationDict = {'reg': math.floor(totalSongs/5), 'xtra':(totalSongs%5) }
 #the remainder is because its a slightly different loop
-#I arbitrarily say that we should segment the call into 5, (maybe 6) segments
+#I arbitrarily say that we should segment the call into 5, (maybe 6) segments for explained below
 
-#IMPORTANT DEBUGGING STUFF PLS KEEP
-#print("TESTING ELEMENT")
-#print(olddata[5])
-#print("total songs: " + str(totalSongs))
-#print(olddata)#print(iterationDict)
-#print("\n")
-#COFFEE
+
 #AT THIS POINT, THERE ARE THE CORRECT NUMBER OF SONGS IN THIS LIST, COMMA SEPARATED
 
 #**********************GET ATTRIBUTES OF A SONG BY LOOKING UP THE SPECIFIC SONG ID*******************************************************************************************************
+######################*****WE'RE DOING THIS SEGMENT MESS TO NOT MAKE THE URL TOO LONG NO MATTER HOW MANY SONGS WE HAVE YAY****************************
 counter = 0
 print("OLD DATA LEN:",len(olddata))
 for i in range(0,5,1): #loop through each main segment 
@@ -170,9 +142,6 @@ for i in range(0,5,1): #loop through each main segment
     for j in range(0,100,1):
 
 
-        #print("I: "+str(i)+ " J: " + str(j) + " i*5: " + str(i*5) + " index: " + str(((i*5)+j-1)))
-        #print('index: ' + str(((i*iterationDict['reg'])+j)))
-        #print(counter)
         full_url += olddata[counter]+"," 
         counter += 1
         #^^goal is to add the 5th of song ids to the lookup url
@@ -241,48 +210,6 @@ dataList = data['audio_features']
 
 #I promise you ik how to program, I am doing this rawdog because we will add more genres in the future but I promise you ik this is slow but it is readable
 
-#**The idea here is to segment 90% of the data into the training data, and like 10% into test data
-#training data is one file, test data is the other file
-#we need to make it a string to clean it up
-#spotify api is [INCONSISTENT] at best, so we don't actually know how many songs we're going to get
-#that's why we need to do it this way ugh
-
-
-#bigRap = dataList[:fullGenreList[0]['num']-3]
-#iterator = fullGenreList[0]['num']-3
-#the idea is to get the first 0 to [number of rap songs - 3] as the first var
-#and the last 3 rap songs as the 2nd var
-#each var (rn is just a string) will be cleaned up later
-#and then appended to the appropriate file
-
-#smallRap = dataList[iterator:iterator + 3]
-#iterator = fullGenreList[0]['num']
-#the iterator is necessary ish to keep our place in the list
-#^the point is we traverse the list to find songs of the right genre
-#and then assign those songs the genre by search num
-#ik this is a weird way to do it, but spotify api 
-#doesn't give us the genre so we kinda have to retroactively do it ourselves 
-#
-
-#we have to stair step this by only making rock songs in bigRock by basing off where we were
-#bigRock = dataList[iterator:iterator+fullGenreList[1]['num']-3]
-#iterator += fullGenreList[1]['num']-3
-
-#smallRock = dataList[iterator:iterator+3]
-#iterator += 3
-
-#bigPop = dataList[iterator:iterator+fullGenreList[2]['num']-3]
-#iterator += fullGenreList[2]['num']-3
-
-#smallPop = dataList[iterator:iterator+3]
-#keep below line for future work
-#iterator += 3
-
-#TODO COFFEE add more genres here, 
-#bigRap = dataList[:fullGenreList[0]['num']-3]
-#iterator = fullGenreList[0]['num']-3
-#smallRap = dataList[iterator:iterator + 3]
-#iterator = fullGenreList[0]['num']
 bigRnb = ""
 bigSalsa = ""
 bigReggaeton = ""

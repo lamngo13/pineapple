@@ -5,7 +5,7 @@ The aim of this machine learning project is to develop a model that can predict 
 maquinaprender.ipynb contains our code, and paper.ipynb is a copy of our paper. 
 
 ## Members
-Primary Contact- Lam Gia Ngo Jr - 730314275
+Lam Gia Ngo Jr - 730314275
 Maya Theresa Gopal - 730418748
 Nori West- 730334985
 Manisha Nallakatla - 730396066
